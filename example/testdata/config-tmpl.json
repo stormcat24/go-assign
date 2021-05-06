@@ -1,0 +1,6 @@
+{
+  "helloAPIDomain": "hello-api.example.com",
+  "helloAPITokenFile": "{{ .HelloAPITokenFile }}",
+  "worldAPIDomain": "world-api.example.com",
+  "worldAPITokenFile": "{{ .WorldAPITokenFile }}"
+}

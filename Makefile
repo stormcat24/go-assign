@@ -32,3 +32,7 @@ debug: build
 .PHONY: gen-example
 gen-example:
 	@go generate ./example/...
+
+.PHONY: test
+test:
+	GO111MODULE=on go test -v ./...
