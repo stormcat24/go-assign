@@ -48,3 +48,8 @@ gen-example:
 .PHONY: test
 test:
 	GO111MODULE=on go test -v ./...
+
+.PHONY: update-credits
+update-credits:
+	@go install github.com/Songmu/gocredits/cmd/gocredits@latest
+	@gocredits . > CREDITS
