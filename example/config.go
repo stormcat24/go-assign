@@ -1,10 +1,10 @@
 package example
 
-//go:generate go-assign
+//go:generate go-assign generate
 
 type Config struct {
 	HelloAPIDomain string `json:"helloAPIDomain"`
-	HelloAPIToken  []byte `json:"helloAPIToken" go-assign:"sourceFileField=HelloAPITokenFile"`
+	HelloAPIToken  []byte `json:"helloAPIToken" go-assign:"fileFieldName=HelloAPITokenFile,fileFieldTag=json:\"helloAPITokenFile\""`
 	WorldAPIDomain string `json:"worldAPIDomain"`
-	WorldAPIToken  []byte `json:"worldAPIToken" go-assign:"sourceFileField=WorldAPITokenFile,base64=true"`
+	WorldAPIToken  []byte `json:"worldAPIToken" go-assign:"fileFieldName=WorldAPITokenFile,fileFieldTag=json:\"worldAPITokenFile\",base64=true"`
 }

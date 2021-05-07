@@ -29,20 +29,20 @@ func (g *ConfigGenerated) UnmarshalJSON(data []byte) error {
 	}
 	// Assign "HelloAPITokenFile" and "HelloAPIToken"
 	g.HelloAPITokenFile = s.HelloAPITokenFile
-	helloAPITokenFileData, err := os.ReadFile(s.HelloAPITokenFile)
+	helloApitokenFileData, err := os.ReadFile(s.HelloAPITokenFile)
 	if err != nil {
 		return err
 	}
-	g.HelloAPIToken = helloAPITokenFileData
+	g.HelloAPIToken = helloApitokenFileData
 
 	// Assign "WorldAPITokenFile" and "WorldAPIToken"
 	g.WorldAPITokenFile = s.WorldAPITokenFile
-	worldAPITokenFileData, err := os.ReadFile(s.WorldAPITokenFile)
+	worldApitokenFileData, err := os.ReadFile(s.WorldAPITokenFile)
 	if err != nil {
 		return err
 	}
-	g.WorldAPIToken = make([]byte, base64.StdEncoding.EncodedLen(len(worldAPITokenFileData)))
-	if _, err := base64.StdEncoding.Decode(g.WorldAPIToken, worldAPITokenFileData); err != nil {
+	g.WorldAPIToken = make([]byte, base64.StdEncoding.EncodedLen(len(worldApitokenFileData)))
+	if _, err := base64.StdEncoding.Decode(g.WorldAPIToken, worldApitokenFileData); err != nil {
 		return err
 	}
 

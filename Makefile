@@ -39,7 +39,7 @@ build:
 debug: build
 	@rm -rf $(GOPATH)/bin/go-assign
 	@cp -R $(GOPATH)/src/github.com/stormcat24/go-assign/bin/go-assign $(GOPATH)/bin/
-	@make gen-example 
+	@make gen-example
 
 .PHONY: gen-example
 gen-example:

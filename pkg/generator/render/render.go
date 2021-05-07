@@ -1,29 +1,28 @@
-package generator
+package render
 
 import (
 	"bytes"
 	"embed"
-	"fmt"
 	"os"
 	"text/template"
 
-	"github.com/rs/xid"
 	"golang.org/x/tools/imports"
 )
 
 //go:embed template/*.tmpl
 var TemplateFile embed.FS
 
-type Param struct {
+type GeneratedParam struct {
 	EarlierGo116 bool
 	Package      string
 	Extend       Struct
+	FileName     string
 }
 
 type Struct struct {
 	Name   string
 	Parent string
-	Fields []Field
+	Fields []*FileField
 }
 
 func (s *Struct) HasBase64Encoding() bool {
@@ -35,22 +34,21 @@ func (s *Struct) HasBase64Encoding() bool {
 	return false
 }
 
-type Field struct {
-	Name       string
-	LocalName  string
-	SourceName string
-	Tag        string
-	Base64     bool
+type FileField struct {
+	Name             string
+	LocalName        string
+	AssignTargetName string
+	Tag              string
+	Base64           bool
 }
 
-func Render(param *Param) ([]byte, error) {
+func Render(param *GeneratedParam) ([]byte, error) {
 	// TODO: Implement Go1.16 earlier
 	tmpl, err := template.ParseFS(TemplateFile, "template/gen_go1.16.tmpl")
 	if err != nil {
 		return nil, err
 	}
-
-	rawFile, err := os.CreateTemp("/tmp", fmt.Sprintf("%s.go", xid.New().String()))
+	rawFile, err := os.CreateTemp("", "*.go")
 	if err != nil {
 		return nil, err
 	}

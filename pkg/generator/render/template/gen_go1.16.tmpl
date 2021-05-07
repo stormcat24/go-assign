@@ -33,19 +33,19 @@ func (g *{{ .Extend.Name }}) UnmarshalJSON(data []byte) error {
 	}
 
 {{- range $field := .Extend.Fields }}
-	// Assign "{{ $field.Name }}" and "{{ $field.SourceName }}"
+	// Assign "{{ $field.Name }}" and "{{ $field.AssignTargetName }}"
 	g.{{ $field.Name }} = s.{{ $field.Name }}
 	{{ $field.LocalName }}Data, err := os.ReadFile(s.{{ $field.Name }})
 	if err != nil {
 		return err
 	}
 {{- if $field.Base64 }}
-	g.{{ $field.SourceName }} = make([]byte, base64.StdEncoding.EncodedLen(len({{ $field.LocalName }}Data)))
-	if _, err := base64.StdEncoding.Decode(g.{{ $field.SourceName }}, {{ $field.LocalName }}Data); err != nil {
+	g.{{ $field.AssignTargetName }} = make([]byte, base64.StdEncoding.EncodedLen(len({{ $field.LocalName }}Data)))
+	if _, err := base64.StdEncoding.Decode(g.{{ $field.AssignTargetName }}, {{ $field.LocalName }}Data); err != nil {
 		return err
 	}
 {{- else }}
-	g.{{ $field.SourceName }} = {{ $field.LocalName }}Data
+	g.{{ $field.AssignTargetName }} = {{ $field.LocalName }}Data
 {{ end }}
 
 {{- end }}

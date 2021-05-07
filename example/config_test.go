@@ -10,11 +10,12 @@ import (
 	"text/template"
 
 	"github.com/stretchr/testify/assert"
+	"github.com/stretchr/testify/require"
 )
 
 func TestUnmarshal(t *testing.T) {
 	tmpl, err := template.ParseFS(TestDataDir, "testdata/config-tmpl.json")
-	assert.NoError(t, err)
+	require.NoError(t, err)
 
 	td := os.TempDir()
 	defer os.RemoveAll(td)
@@ -29,22 +30,22 @@ func TestUnmarshal(t *testing.T) {
 
 	js := bytes.NewBufferString("")
 	err = tmpl.Execute(js, m)
-	assert.NoError(t, err)
+	require.NoError(t, err)
 
 	dstHelloCred, err := os.Create(dstHelloCredPath)
-	assert.NoError(t, err)
+	require.NoError(t, err)
 	dstWorldCred, err := os.Create(dstWorldCredPath)
-	assert.NoError(t, err)
+	require.NoError(t, err)
 
 	srcHelloCred, err := TestDataDir.Open("testdata/hello-api-credentials.txt")
-	assert.NoError(t, err)
+	require.NoError(t, err)
 	srcWorldCred, err := TestDataDir.Open("testdata/world-api-credentials.txt")
-	assert.NoError(t, err)
+	require.NoError(t, err)
 
 	_, err = io.Copy(dstHelloCred, srcHelloCred)
-	assert.NoError(t, err)
+	require.NoError(t, err)
 	_, err = io.Copy(dstWorldCred, srcWorldCred)
-	assert.NoError(t, err)
+	require.NoError(t, err)
 
 	var g ConfigGenerated
 	err = json.Unmarshal(js.Bytes(), &g)

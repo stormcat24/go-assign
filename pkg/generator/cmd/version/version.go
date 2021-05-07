@@ -3,7 +3,9 @@ package version
 import (
 	"context"
 	"fmt"
+
 	"github.com/spf13/cobra"
+
 	"github.com/stormcat24/go-assign/pkg/cli"
 	"github.com/stormcat24/go-assign/pkg/version"
 )
@@ -16,7 +18,7 @@ func NewCommand() *cobra.Command {
 	cmd := &cobra.Command{
 		Use:   "version",
 		Short: "Print go-assign version",
-		RunE: cli.WithContext(v.run),
+		RunE:  cli.WithContext(v.run),
 	}
 	return cmd
 }
