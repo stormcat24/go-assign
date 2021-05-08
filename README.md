@@ -22,7 +22,7 @@ This is a good idea, but as the number of secrets increases, so does the cost of
 # Installation
 
 ```shell
-$ go get github.com/stormcat24/go-assign
+$ go install github.com/stormcat24/go-assign/cmd/go-assign@latest
 ```
 
 # Usage

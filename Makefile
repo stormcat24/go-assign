@@ -33,7 +33,7 @@ build:
 	$(eval BUILD_DATE := $(shell date '+%Y%m%d'))
 	GO111MODULE=on GOOS=$(GOOS) GOARCH=$(GOARCH) \
 		go build -ldflags "-s -w -X $(LDFLAG_OS_ARCH)=$(GOOS)/$(GOARCH) -X $(LDFLAG_GIT_COMMIT)=$(GIT_COMMIT) -X $(LDFLAG_GIT_COMMIT_FULL)=$(GIT_COMMIT_FULL) -X $(LDFLAG_BUILD_DATE)=$(BUILD_DATE) -X $(LDFLAG_VERSION)=$(BUILD_DATE)-$(GIT_COMMIT)" \
-			-o bin/go-assign -mod=vendor cmd/generator/main.go
+			-o bin/go-assign -mod=vendor cmd/go-assign/main.go
 
 .PHONY: debug
 debug: build
