@@ -29,7 +29,7 @@ func (g *{{ .Extend.Name }}) UnmarshalJSON(data []byte) error {
 	}
 
 	if err := json.Unmarshal(data, &s); err != nil {
-		return err
+		return fmt.Errorf("go-assign: %w", err)
 	}
 
 {{- range $field := .Extend.Fields }}
@@ -37,12 +37,12 @@ func (g *{{ .Extend.Name }}) UnmarshalJSON(data []byte) error {
 	g.{{ $field.Name }} = s.{{ $field.Name }}
 	{{ $field.LocalName }}Data, err := os.ReadFile(s.{{ $field.Name }})
 	if err != nil {
-		return err
+		return fmt.Errorf("go-assign({{ $field.Name }}): %w", err)
 	}
 {{- if $field.Base64 }}
 	g.{{ $field.AssignTargetName }} = make([]byte, base64.StdEncoding.EncodedLen(len({{ $field.LocalName }}Data)))
 	if _, err := base64.StdEncoding.Decode(g.{{ $field.AssignTargetName }}, {{ $field.LocalName }}Data); err != nil {
-		return err
+		return fmt.Errorf("go-assign({{ $field.Name }}): %w", err)
 	}
 {{- else }}
 	g.{{ $field.AssignTargetName }} = {{ $field.LocalName }}Data
